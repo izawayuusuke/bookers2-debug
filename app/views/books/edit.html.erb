@@ -1,13 +1,33 @@
 <div class="row">
 <div class="col-md-6 col-md-offset-3">
-
 <h1>Editing Book</h1>
+    <% if @book.errors.any? %>
+      <div id="explanation">
+        <h3><%= pluralize(@book.errors.count, "error") %> prohibited this obj from being saved:</h3>
+      </div>
+      <ul>
+        <% @book.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <%= form_for(@book) do |f| %>
+      <div class="field row">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: "col-xs-12 book_title" %>
+      </div>
 
-<%= render "books/newform", book: @book %>
+      <div class="field row">
+        <%= f.label :opinion %> <!-- ここを変更 -->
+        <%= f.text_area :body, class: "col-xs-12 book_body" %>
+      </div>
+
+      <div class="actions row">
+        <%= f.submit "Update Book", class: "btn btn-primary col-xs-12" %>
+      </div>
+    <% end %>
 <%= link_to "Show", @book, class: "book_#{@book.id}" %>
 <%= link_to "Back", books_path, class: "back" %>
 
 </div>
-<div class="col-md-3"></div>
-
 </div>
